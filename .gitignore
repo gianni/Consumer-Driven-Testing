@@ -1,0 +1,4 @@
+pacts/*
+vendor/
+log/*
+.phpunit.result.cache

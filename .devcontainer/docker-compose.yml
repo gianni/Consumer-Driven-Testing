@@ -1,0 +1,34 @@
+version: '3.8'
+
+services: 
+  app:
+    container_name: consumer-driven-testing-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Update 'VARIANT' to pick a version of PHP version: 8, 8.1, 8.0, 7, 7.4
+        # Append -bullseye or -buster to pin to an OS version.
+        # Use -bullseye variants on local arm64/Apple Silicon.
+        VARIANT: "8.2-apache-bullseye"
+        # Optional Node.js version
+        NODE_VERSION: "lts/*"
+
+    volumes:
+      - ..:/workspace:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+  pact-broker:
+    image: pactfoundation/pact-broker
+    container_name: pact-broker
+    restart: unless-stopped
+    ports:
+      - "9292:9292"
+    environment:
+      PACT_BROKER_DATABASE_ADAPTER: sqlite
+      PACT_BROKER_DATABASE_NAME: /var/lib/sqlite/pact_broker.db
+    volumes:
+      - ./pact-broker-data:/var/lib/sqlite
+    user: root
