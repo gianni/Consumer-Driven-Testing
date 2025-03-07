@@ -28,7 +28,7 @@ A Pact Broker server is a service that is used to store and verify the contracts
 
 Once the tests have been run, the contracts are verified against the Pact Broker server. To do this, you can run the following command:
 
-    composer pact:publish
+    composer pact-publish
 
 This will publish the contracts to the Pact Broker server. The interface for the Pact Broker server is available at [http://127.0.0.1:9292](http://127.0.0.1:9292). You can access this interface to view the contracts and verify that they are satisfied.
 
